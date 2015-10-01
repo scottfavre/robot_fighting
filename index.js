@@ -25,6 +25,7 @@ board.on("ready", function() {
   });
 
   var speed = 255;
+  var jawsOpen = false;
 
   function forward() {
   	leftWheel.fwd(speed);
@@ -42,13 +43,17 @@ board.on("ready", function() {
   }
 
   function right() {
-  	leftWheel.rev(speed);
-  	rightWheel.fwd(speed);
+  	var turnSpeed = jawsOpen ? speed*3/4 : speed;
+  	console.log('right at ' + turnSpeed + ' ' + jawsOpen);
+  	leftWheel.rev(turnSpeed);
+  	rightWheel.fwd(turnSpeed);
   }
 
   function left() {
-  	leftWheel.fwd(speed);
-  	rightWheel.rev(speed);
+  	var turnSpeed = jawsOpen ? speed*3/4 : speed;
+	console.log('left at ' + turnSpeed + ' ' + jawsOpen);
+  	leftWheel.fwd(turnSpeed);
+  	rightWheel.rev(turnSpeed);
   }
 
 
@@ -62,12 +67,14 @@ var servo = new five.Servo({
 
   function open()
   {
-  	servo.to(40);
+  	jawsOpen = true;
+  	servo.to(30);
   }
 
   function close()
   {
-  	servo.to(90);
+  	jawsOpen = false;
+  	servo.to(80);
   }
   // Sweep from 0-180 and repeat.
  // servo.sweep([0,10]);
@@ -89,11 +96,14 @@ var servo = new five.Servo({
   };
 
   stdin.on('keypress', function(chunk, key) {
-  	console.log(key);
   	if(!key || !keyMap[key.name]) return;
 
-  
+  	console.log(key.name);
 
   	keyMap[key.name]();
-  })
+  });
+
+  open();
+
+
 });
