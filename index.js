@@ -41,12 +41,12 @@ board.on("ready", function() {
   	rightWheel.stop();
   }
 
-  function left() {
+  function right() {
   	leftWheel.rev(speed);
   	rightWheel.fwd(speed);
   }
 
-  function right() {
+  function left() {
   	leftWheel.fwd(speed);
   	rightWheel.rev(speed);
   }
@@ -56,8 +56,8 @@ board.on("ready", function() {
   stdin.resume();
 
   var keyMap = {
-  	'up': forward,
-  	'down': reverse,
+  	'up': reverse,
+  	'down': forward,
   	'left': left,
   	'right': right,
   	'space': stop
