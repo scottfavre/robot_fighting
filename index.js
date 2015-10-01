@@ -51,6 +51,29 @@ board.on("ready", function() {
   	rightWheel.rev(speed);
   }
 
+
+
+var servo = new five.Servo({
+    id: "MyServo",     // User defined id
+    pin: "A4",           // Which pin is it attached to?
+    type: "standard"  // Default: "standard". Use "continuous" for continuous rotation servos
+        // Default: 0-180
+});
+
+  function open()
+  {
+  	servo.to(40);
+  }
+
+  function close()
+  {
+  	servo.to(90);
+  }
+  // Sweep from 0-180 and repeat.
+ // servo.sweep([0,10]);
+
+
+
   var stdin = process.stdin;
   stdin.setRawMode(true);
   stdin.resume();
@@ -60,13 +83,16 @@ board.on("ready", function() {
   	'down': forward,
   	'left': left,
   	'right': right,
-  	'space': stop
+  	'space': stop,
+  	'insert': open,
+  	'delete': close
   };
 
   stdin.on('keypress', function(chunk, key) {
+  	console.log(key);
   	if(!key || !keyMap[key.name]) return;
 
-  	console.log(key.name);
+  
 
   	keyMap[key.name]();
   })
